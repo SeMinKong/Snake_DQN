@@ -1,1 +1,36 @@
-.venv
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Trained models
+SnakeDQN/models/
+SnakeDQN_linear/models/
+
+# Logs & plots
+*.log
+*.csv
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# OMC / Claude
+.omc/
+.claude/worktrees/

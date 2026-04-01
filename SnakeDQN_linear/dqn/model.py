@@ -23,12 +23,13 @@ class Linear_QNet(nn.Module):
         torch.save(self.state_dict(), file_name)
 
 class QTrainer:
-    def __init__(self, model, lr, gamma):
+    def __init__(self, model, target_model, lr, gamma):
         self.lr = lr
         self.gamma = gamma
         self.model = model
+        self.target_model = target_model
         self.optimizer = optim.Adam(model.parameters(), lr=self.lr)
-        self.criterion = nn.MSELoss()
+        self.criterion = nn.SmoothL1Loss()
 
     def train_step(self, state, action, reward, next_state, done):
         state = torch.tensor(state, dtype=torch.float)
@@ -49,11 +50,17 @@ class QTrainer:
         for idx in range(len(done)):
             Q_new = reward[idx]
             if not done[idx]:
-                Q_new = reward[idx] + self.gamma * torch.max(self.model(next_state[idx]))
+                # Double DQN: online model selects action, target model evaluates value
+                with torch.no_grad():
+                    online_next = self.model(next_state[idx])
+                    best_action = torch.argmax(online_next).item()
+                    target_next = self.target_model(next_state[idx])
+                    Q_new = reward[idx] + self.gamma * target_next[best_action]
 
             target[idx][torch.argmax(action[idx]).item()] = Q_new
     
         self.optimizer.zero_grad()
         loss = self.criterion(pred, target)
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
         self.optimizer.step()

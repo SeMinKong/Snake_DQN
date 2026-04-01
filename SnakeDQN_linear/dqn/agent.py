@@ -8,15 +8,19 @@ from dqn.model import Linear_QNet, QTrainer
 MAX_MEMORY = 100000
 BATCH_SIZE = 1000
 LR = 0.001
+TARGET_UPDATE = 100
 
 class Agent:
     def __init__(self):
         self.n_games = 0
         self.epsilon = 0 
-        self.gamma = 0.9 
+        self.gamma = 0.99
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(11, 256, 3)
-        self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
+        self.target_model = Linear_QNet(11, 256, 3)
+        self.target_model.load_state_dict(self.model.state_dict())
+        self.target_model.eval()
+        self.trainer = QTrainer(self.model, self.target_model, lr=LR, gamma=self.gamma)
 
     def get_state(self, game):
         head = game.head
@@ -71,12 +75,14 @@ class Agent:
 
         states, actions, rewards, next_states, dones = zip(*mini_sample)
         self.trainer.train_step(states, actions, rewards, next_states, dones)
+        if self.n_games % TARGET_UPDATE == 0:
+            self.update_target_network()
 
     def train_short_memory(self, state, action, reward, next_state, done):
         self.trainer.train_step(state, action, reward, next_state, done)
 
     def get_action(self, state):
-        self.epsilon = 80 - self.n_games
+        self.epsilon = max(1, 80 * (0.995 ** self.n_games))
         final_move = [0,0,0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 2)
@@ -88,3 +94,6 @@ class Agent:
             final_move[move] = 1
 
         return final_move
+
+    def update_target_network(self):
+        self.target_model.load_state_dict(self.model.state_dict())

@@ -128,12 +128,12 @@ class SnakeGameAI:
         
         if self.is_collision() or self.frame_iteration > 150 * len(self.snake):
             game_over = True
-            reward = -20
+            reward = -10
             return reward, game_over, self.score
             
         if self.head == self.food:
             self.score += 1
-            reward = 15
+            reward = 10
             self._place_food()
         else:
             self.snake.pop()
@@ -142,12 +142,12 @@ class SnakeGameAI:
             
             accessible_count = self._get_accessible_area(self.head)
             if accessible_count < len(self.snake):
-                reward = -15
+                reward = -5
             
             elif dist_after < dist_before:
-                reward = 1
+                reward = 0.1
             else:
-                reward = 0 
+                reward = -0.1
                 
         reward += 0.01
         
