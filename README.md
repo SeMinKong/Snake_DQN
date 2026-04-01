@@ -49,7 +49,7 @@ git clone <repository-url>
 cd Snake_DQN
 pip install -r requirements.txt
 # GPU 가속 버전 (권장)
-pip install torch --index-url https://download.pytorch.org/whl/cu121
+pip install torch --index-url https://download.pytorch.org/whl/cu128 (버전 확인)
 ```
 
 ### 모델 학습
