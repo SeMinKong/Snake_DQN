@@ -67,5 +67,8 @@ python main.py
 - **Linear**: 30-50 points within ~300 episodes.
 - **CNN**: 25-35 points within ~1000 episodes.
 
+> 💡 **Need more details?**
+> For advanced hyperparameter tuning, reward shaping strategies, and state representations, please refer to the [Detailed Manual (DETAILS.en.md)](./DETAILS.en.md).
+
 ---
 Built with ❤️ using PyTorch & Pygame.
