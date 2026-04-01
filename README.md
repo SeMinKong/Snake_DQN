@@ -5,6 +5,7 @@
 **Deep Q-Network, DQN**를 활용하여 Snake 게임을 학습시키는 강화학습 프로젝트입니다. 본 프로젝트는 픽셀 기반의 시각 정보를 학습하는 CNN 모델과 수작업으로 추출한 특징 벡터를 학습하는 선형 모델의 두 가지 구현을 통해 강화학습의 다양한 접근 방식을 탐구합니다.
 
 **Demo** 
+
 Episode 0:
 <video src="https://github.com/user-attachments/assets/43e9ba4d-298b-4cd3-869f-234fd6c26b4d" width="600" controls></video>
 
