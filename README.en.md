@@ -64,7 +64,7 @@ git clone <repository-url>
 cd Snake_DQN
 pip install -r requirements.txt
 # For GPU support (recommended)
-pip install torch --index-url https://download.pytorch.org/whl/cu121
+pip install torch --index-url https://download.pytorch.org/whl/cu128
 ```
 
 ### Training
