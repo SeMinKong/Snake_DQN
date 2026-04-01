@@ -1,22 +1,42 @@
-from game.snake_game import SnakeGameAI
-from dqn.agent import Agent
+"""
+main.py — Training entry-point for SnakeDQN (CNN-based).
 
-def train():
-    record = 0
+Run with:
+    python main.py
+"""
+
+import logging
+import sys
+
+from config import MODEL_CFG
+from dqn.agent import Agent
+from game.snake_game import SnakeGameAI
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%H:%M:%S",
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
+
+
+def train() -> None:
+    """Main training loop."""
+    record: int = 0
     agent = Agent()
     game = SnakeGameAI()
-    
+
     frame = game.reset()
     state_old = agent.get_state(frame)
-    
-    n_steps = 0
-    print("Training Started (CNN Based)...")
+
+    n_steps: int = 0
+    logger.info("Training started (CNN-based DQN).")
 
     while True:
         final_move = agent.get_action(state_old)
 
         frame_new, reward, done, score = game.play_step(final_move, render=True)
-        
         state_new = agent.get_state(frame_new)
 
         agent.remember(state_old, final_move, reward, state_new, done)
@@ -37,9 +57,16 @@ def train():
 
             if score > record:
                 record = score
-                agent.model.save('model_cnn_best.pth')
+                agent.model.save(MODEL_CFG.save_filename, MODEL_CFG)
 
-            print(f'Game {agent.n_games} | Score: {score} | Record: {record} | Epsilon: {agent.epsilon:.3f}')
+            logger.info(
+                "Game %d | Score: %d | Record: %d | Epsilon: %.3f",
+                agent.n_games,
+                score,
+                record,
+                agent.epsilon,
+            )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     train()
