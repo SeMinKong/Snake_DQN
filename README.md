@@ -1,4 +1,4 @@
-# Snake AI:(DQN)
+# Snake AI:DQN
 
 **[English Version](./README.en.md)**
 
