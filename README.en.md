@@ -1,10 +1,10 @@
-# Snake AI: Deep Q-Network (DQN) 🐍
+# Snake AI: Deep Q-Network (DQN)
 
 **[한국어 버전](./README.md)**
 
 A reinforcement learning project that teaches an agent to play the classic Snake game using **Deep Q-Networks (DQN)**. This project explores the trade-offs between end-to-end visual learning and hand-crafted feature engineering through two distinct implementations.
 
-## 🚀 Key Features
+## Key Features
 
 - **Dual Architectures**:
   - **CNN-based (SnakeDQN)**: Learns directly from 84x84 grayscale pixel inputs, mimicking human-like visual perception.
@@ -13,7 +13,7 @@ A reinforcement learning project that teaches an agent to play the classic Snake
 - **Epsilon-Greedy Strategy**: Balances exploration and exploitation, starting from random moves and gradually transitioning to greedy actions.
 - **Custom Reward Shaping**: Specialized reward functions including BFS-based pathfinding to guide the agent through complex maze-like scenarios.
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Deep Learning**: PyTorch 2.0+
 - **Game Engine**: Pygame
@@ -21,7 +21,7 @@ A reinforcement learning project that teaches an agent to play the classic Snake
 - **Language**: Python 3.8+
 - **Hardware**: CUDA support for GPU acceleration
 
-## 🏗 Project Structure
+## Project Structure
 
 ```text
 ├── SnakeDQN/           # CNN-based model (Visual learning)
@@ -33,7 +33,7 @@ A reinforcement learning project that teaches an agent to play the classic Snake
 └── GpuCheck.py         # Utility to verify CUDA availability
 ```
 
-## 🧠 Technical Highlights
+## Technical Highlights
 
 ### 1. CNN vs. Linear Trade-offs
 I implemented both models to analyze the performance gap. While the **Linear model** reaches high scores within 300 episodes due to efficient feature extraction, the **CNN model** demonstrates superior generalization capabilities by learning spatial patterns directly from raw pixels, albeit requiring more training time.
@@ -41,7 +41,7 @@ I implemented both models to analyze the performance gap. While the **Linear mod
 ### 2. Stability in Reinforcement Learning
 To solve the instability issues common in DQN, I integrated a **Target Network** that syncs every 1,000 steps. This "fixed target" approach prevents the agent from chasing a moving target, leading to much smoother loss curves and faster mastery of the game.
 
-## 🏁 Quick Start
+## Quick Start
 
 ### Installation
 ```bash
@@ -63,12 +63,12 @@ cd ../SnakeDQN
 python main.py
 ```
 
-## 📊 Expected Performance
+## Expected Performance
 - **Linear**: 30-50 points within ~300 episodes.
 - **CNN**: 25-35 points within ~1000 episodes.
 
-> 💡 **Need more details?**
+>  **Need more details?**
 > For advanced hyperparameter tuning, reward shaping strategies, and state representations, please refer to the [Detailed Manual (DETAILS.en.md)](./DETAILS.en.md).
 
 ---
-Built with ❤️ using PyTorch & Pygame.
+Built with  using PyTorch & Pygame.
