@@ -2,17 +2,17 @@
 
 **[한국어 버전](./README.md)**
 
-A reinforcement learning project that teaches an agent to play the classic Snake game using **Deep Q-Networks (DQN)**. This project explores the trade-offs between end-to-end visual learning and hand-crafted feature engineering through two distinct implementations.
+I trained a Snake agent with **Deep Q-Networks (DQN)** in two ways: a CNN that reads pixels and a linear model that reads hand-crafted features.
 
 ## Key Features
 
 - **Dual Architectures**:
   - **CNN-based (SnakeDQN)**: Learns from a stack of 4 grayscale frames (4×84×84), giving the agent temporal context to infer movement direction.
   - **Linear-based (SnakeDQN_linear)**: Uses an 11-dimensional feature vector (collisions, direction, food location) for ~10x faster convergence.
-- **Double DQN**: Decouples action selection (online network) from value evaluation (target network) to eliminate systematic Q-value overestimation. Applied to both variants.
-- **Training Stability**: Huber Loss (SmoothL1), gradient clipping, and exponential epsilon decay work together to prevent unstable training.
+- **Double DQN**: Uses the online network for action selection and the target network for value evaluation in both variants.
+- **Training Settings**: Uses Huber Loss (SmoothL1), gradient clipping, and exponential epsilon decay.
 - **Rebalanced Rewards**: Rescaled death/food/movement rewards to remove perverse incentives (e.g., cumulative retreat penalty exceeding the death penalty).
-- **Experience Replay & Target Network**: Both techniques implemented across all variants for decorrelated sampling and stable Q-targets.
+- **Experience Replay & Target Network**: Both variants use a replay buffer and a target network.
 
 ## Tech Stack
 
@@ -84,8 +84,4 @@ python main.py
 - **Linear**: 30-50 points within ~300 episodes.
 - **CNN**: 25-35 points within ~1000 episodes (further gains expected with longer training due to 4-frame temporal context).
 
->  **Need more details?**
-> For advanced hyperparameter tuning, reward shaping strategies, and state representations, please refer to the [Detailed Manual (DETAILS.en.md)](./DETAILS.en.md).
-
----
-Built with PyTorch & Pygame.
+Hyperparameters, reward functions, and state representations are documented in the [detailed manual](./DETAILS.en.md).
